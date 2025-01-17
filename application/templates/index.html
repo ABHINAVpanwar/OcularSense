@@ -1,0 +1,2154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OcularSense</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Reenie+Beanie&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/x-icon" href="./static/favicon.png" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #faf6f6;
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+      }
+
+      nav {
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        height: 14vh;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+      }
+
+      nav ul {
+        list-style-type: none;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #ul1 {
+        position: absolute;
+        left: 4vw;
+      }
+
+      #logo {
+        font-weight: bold;
+        cursor: default;
+      }
+
+      #ul2 {
+        position: absolute;
+        right: 4vw;
+        gap: 4vw;
+      }
+
+      #ul2 a:hover {
+        color: #4caf50;
+      }
+
+      nav a {
+        color: black;
+        font-size: large;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f4f4f4;
+      }
+
+      #login {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 100vh;
+        cursor: default;
+      }
+
+      #login-container {
+        height: 50vh;
+        width: 40vw;
+        gap: 3vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        cursor: default;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
+
+      #login-container input {
+        margin: 10px 0;
+        padding: 10px;
+        width: 25vw;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      #login-container button {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      #login-container button:hover {
+        background-color: #218838;
+      }
+
+      .error {
+        color: red;
+        margin-top: 10px;
+      }
+
+      #contactmebtn {
+        display: flex;
+        justify-content: center;
+      }
+
+      #contactmeimg {
+        z-index: 10000;
+        position: fixed;
+        bottom: -60px; /* Initially hidden below the screen */
+        right: 30px;
+        height: 60px;
+        width: 60px;
+        cursor: pointer;
+        opacity: 0;
+        transition: bottom 0.5s ease-in-out, opacity 0.5s ease-in-out;
+      }
+      #contactmeimg.visible {
+        bottom: 0px; /* Final position */
+        opacity: 1;
+      }
+      #contactmeimg.hover-effect {
+        animation: hover 2s infinite ease-in-out;
+      }
+      @keyframes hover {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      #overlay2 {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(10px); /* Adjust the blur intensity as needed */
+        z-index: 9999; /* Ensure it's above other elements, but below the form */
+        cursor: pointer;
+      }
+
+      #goo {
+        cursor: pointer;
+        border: 1px solid black;
+        padding: 4px;
+      }
+
+      #goo:hover {
+        border: 2px solid black;
+      }
+
+      .wao {
+        text-align: center;
+        border: 1px solid black;
+      }
+
+      #S7 {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        padding: 20px;
+        transform: translate(-50%, -50%);
+        display: none;
+        background-color: #f0f0f0;
+        border-radius: 30px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        z-index: 10000; /* Ensure it's above other elements */
+        cursor: default;
+      }
+
+      #form {
+        max-width: 400px; /* Adjust the max width as needed */
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      @media only screen and (min-width: 1300px) {
+        #S7 {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          padding: 40px;
+          transform: translate(-50%, -50%);
+          display: none;
+          background-color: #f0f0f0;
+          border-radius: 40px;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+          cursor: default;
+        }
+        .wao {
+          text-align: center;
+          border: 1px solid black;
+          width: 300px;
+          font-size: 20px;
+        }
+        #form {
+          max-width: 600px; /* Adjust the max width as needed */
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          gap: 20px;
+        }
+        #contactme {
+          font-size: 40px;
+        }
+        #goo {
+          cursor: pointer;
+          border: 1px solid black;
+          padding: 4px;
+          font-size: 20px;
+        }
+      }
+
+      @media only screen and (min-width: 900px) and (max-width: 1300px) {
+        #S7 {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          padding: 30px;
+          transform: translate(-50%, -50%);
+          display: none;
+          background-color: #f0f0f0;
+          border-radius: 30px;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+          cursor: default;
+        }
+        .wao {
+          text-align: center;
+          border: 1px solid black;
+          width: 200px;
+          font-size: 20px;
+        }
+        #form {
+          max-width: 500px; /* Adjust the max width as needed */
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          gap: 20px;
+        }
+        #contactme {
+          font-size: 34px;
+        }
+        #goo {
+          cursor: pointer;
+          border: 1px solid black;
+          padding: 4px;
+          font-size: 20px;
+        }
+      }
+
+      #info-alert {
+        cursor: default;
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        background-color: white;
+        color: black;
+        font-weight: bold;
+        opacity: 0;
+        z-index: 1000;
+        animation: fadeInOut 20s ease forwards;
+      }
+
+      #info-alert h2 {
+        font-size: 2vw;
+        position: absolute;
+        top: 7.5vh;
+      }
+
+      #info-alert p {
+        border: 2px solid #4caf50;
+        border-radius: 10px;
+        padding: 1vw;
+        margin-left: 10vw;
+        margin-right: 10vw;
+        font-size: 1.5vw;
+        position: absolute;
+        top: 25vh;
+      }
+
+      #imgcontainer {
+        font-size: 1.3vw;
+        position: absolute;
+        bottom: 12vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 10vw;
+      }
+
+      .imgcontain {
+        height: 20vh;
+        width: 20vh;
+      }
+
+      .pics {
+        object-fit: contain;
+        height: 20vh;
+        width: 20vh;
+      }
+
+      /* Fade in and out animation */
+      @keyframes fadeInOut {
+        0% {
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        } /* Fade in */
+        80% {
+          opacity: 1;
+        } /* Hold */
+        100% {
+          opacity: 0;
+        } /* Fade out */
+      }
+
+      #detect {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 7vh;
+        height: 86vh;
+        background-color: #faf6f6;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      input[type="file"] {
+        padding: 10px;
+        border: 2px dashed #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        outline: none;
+        transition: border 0.3s;
+      }
+
+      input[type="file"]:hover {
+        border-color: #4caf50;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #218838;
+      }
+
+      .scrollable {
+        cursor: default;
+        width: 78vw;
+        display: flex;
+        overflow-x: auto;
+        padding: 15px;
+        gap: 15px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .image-container {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        position: relative;
+        gap: 20px;
+        width: 200px;
+        height: 200px;
+      }
+
+      .image-container img {
+        width: 150px;
+        height: 150px;
+        border-radius: 10px;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .image-container img:hover {
+        transform: scale(1.1);
+      }
+
+      .image-container p {
+        color: black;
+      }
+
+      .hover-label {
+        position: absolute;
+        bottom: 5px;
+        padding: 5px;
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        border-radius: 5px;
+        display: none;
+      }
+
+      .image-container img:hover + .hover-label {
+        display: block;
+      }
+
+      .download-btn {
+        display: block;
+        text-align: center;
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        text-decoration: none;
+      }
+
+      .download-btn:hover {
+        background-color: #218838;
+      }
+
+      #eye {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        background-color: white;
+        position: relative;
+      }
+
+      #eye_1 {
+        position: absolute;
+        top: 10vh;
+        left: 4vw;
+        width: 33vw;
+      }
+
+      #EyeAnatomy {
+        height: auto;
+        width: 33vw;
+        object-fit: contain;
+      }
+
+      .fade-in {
+        opacity: 0; /* Start invisible */
+        transition: opacity 2s ease-in; /* Transition for fade-in effect */
+      }
+
+      .fade-in.visible {
+        opacity: 1; /* Make it visible */
+      }
+
+      @keyframes slide-in-right {
+        from {
+          transform: translateX(100%); /* Start from the right */
+          opacity: 0; /* Start invisible */
+        }
+        to {
+          transform: translateX(0); /* Move to original position */
+          opacity: 1; /* Make it fully visible */
+        }
+      }
+
+      #eye_2 {
+        cursor: default;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1vh;
+        position: absolute;
+        top: 10vh;
+        right: 4vw;
+        width: 45vw;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 2px solid #4caf50;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: left;
+        opacity: 0; /* Start as invisible */
+        transform: translateX(100vw); /* Start off-screen to the right */
+        transition: opacity 1.5s ease-in-out, transform 1s ease-in-out; /* Smooth transition */
+      }
+
+      #eye_2.visible {
+        opacity: 1; /* Make it visible */
+        transform: translateX(0); /* Move to original position */
+      }
+
+      #eye_2 h2 {
+        font-size: large;
+        color: #333;
+      }
+
+      #eye_2 p {
+        font-size: medium;
+        color: #555;
+        line-height: 1.6;
+      }
+
+      #eye_3 {
+        cursor: default;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1vh;
+        position: absolute;
+        bottom: 8vh;
+        right: 4vw;
+        width: 90vw;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 2px solid #4caf50;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: left;
+        opacity: 0; /* Start as invisible */
+        transform: translateX(100vw); /* Start off-screen to the right */
+        transition: opacity 1.5s ease-in-out, transform 1s ease-in-out; /* Smooth transition */
+      }
+
+      #eye_3.visible {
+        opacity: 1; /* Make it visible */
+        transform: translateX(0); /* Move to original position */
+      }
+
+      #eye_3 h2 {
+        font-size: large;
+        color: #333;
+      }
+
+      #eye_3 p {
+        font-size: medium;
+        color: #555;
+        line-height: 1.6;
+      }
+
+      #oct {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 200vh;
+        background-color: white;
+        cursor: default;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        color: #333;
+        margin-bottom: 10vh;
+      }
+
+      .timeline {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .timeline-item {
+        background-color: #e8f5e9;
+        border-left: 5px solid #4caf50;
+        padding: 5vh;
+        margin: 3vh 0;
+        width: 100%;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        opacity: 0; /* Start hidden */
+        transform: translateY(50px); /* Start with an offset */
+        transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+      }
+
+      .timeline-item h2 {
+        font-size: 1.5rem;
+        color: #2e7d32;
+        margin-bottom: 2vh;
+      }
+
+      .timeline-item p {
+        font-size: 1rem;
+        color: #555;
+      }
+
+      .timeline-item:last-child {
+        background-color: #f1f8e9;
+        border-left: 5px solid #388e3c;
+      }
+
+      .timeline-item.visible {
+        opacity: 1;
+        transform: translateY(0); /* Move into place */
+      }
+
+      .hidden {
+        opacity: 0;
+        transform: translateY(15vh); /* Start off-screen */
+      }
+
+      #model {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 160vh;
+        background-color: white;
+        cursor: default;
+        position: relative;
+      }
+
+      #model_1 {
+        width: 50vw;
+      }
+
+      /* Image styling */
+      #Resnet {
+        height: auto;
+        width: 50vw;
+        object-fit: contain;
+        opacity: 0; /* Start invisible */
+        transform: scale(0.9); /* Start slightly smaller */
+        transition: opacity 1s ease-in-out, transform 1s ease-in-out; /* Smooth transition */
+      }
+
+      #Resnet.visible {
+        opacity: 1; /* Fade in */
+        transform: scale(1); /* Scale to full size */
+      }
+
+      #model_info p {
+        font-family: "Reenie Beanie", serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 1.8rem;
+        color: #333;
+        text-align: justify;
+        line-height: 1.6;
+        width: 80vw;
+      }
+
+      #overlayButton {
+        position: absolute;
+        bottom: 15vh;
+        right: 10vw;
+        height: 6vh;
+        width: 6vh; /* Make width and height equal for a circle */
+        cursor: pointer;
+        border-radius: 50%; /* Circular shape */
+        background-color: #4caf50; /* Button color */
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+        }
+        70% {
+          box-shadow: 0 0 0 20px rgba(76, 175, 80, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+        }
+      }
+
+      #overlay {
+        display: none; /* Hidden by default */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px); /* Blur the background */
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        cursor: pointer;
+      }
+
+      /* Centered grid of images */
+      .overlay-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background: white;
+        border-radius: 10px;
+        cursor: default;
+      }
+
+      .overlay-content img {
+        width: 33vw;
+        height: 33vh;
+        border-radius: 5px;
+        object-fit: contain;
+      }
+
+      #copywrite {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 10vh;
+        background-color: white;
+        cursor: default;
+        position: relative;
+      }
+
+      #copywrite p {
+        margin: 0;
+      }
+
+      @media only screen and (max-width: 600px) {
+        #login-container {
+          height: 50vh;
+          width: 60vw;
+          gap: 5vh;
+          border-radius: 8px;
+          font-size: 16px;
+        }
+
+        #login-container input {
+          margin: 10px 0;
+          padding: 10px;
+          width: 40vw;
+          border-radius: 4px;
+          font-size: 16px;
+        }
+
+        #login-container button {
+          padding: 10px 20px;
+          font-size: 16px;
+        }
+
+        #info-alert h2 {
+          font-size: 5vw;
+          top: 8vh;
+        }
+
+        #info-alert p {
+          border-radius: 10px;
+          padding: 1vw;
+          margin-left: 10vw;
+          margin-right: 10vw;
+          font-size: 3.5vw;
+          top: 20vh;
+        }
+
+        #imgcontainer {
+          font-size: 3vw;
+          bottom: 20vh;
+          gap: 3vw;
+        }
+
+        .imgcontain {
+          height: 12vh;
+          width: 12vh;
+        }
+
+        .pics {
+          height: 12vh;
+          width: 12vh;
+        }
+
+        #detect {
+          gap: 7vh;
+          height: 86vh;
+          background-color: #faf6f6;
+        }
+
+        form {
+          gap: 10px;
+        }
+
+        input[type="file"] {
+          font-size: 16px;
+          padding: 10px;
+          border: 2px dashed #ccc;
+          border-radius: 5px;
+        }
+
+        button {
+          font-size: 16px;
+          padding: 10px;
+          border-radius: 5px;
+        }
+
+        .scrollable {
+          width: 90vw;
+          padding: 10px;
+          gap: 10px;
+          border-radius: 10px;
+        }
+
+        .image-container {
+          gap: 10px;
+          width: 150px;
+          height: 150px;
+        }
+
+        .image-container img {
+          width: 100px;
+          height: 100px;
+          border-radius: 10px;
+        }
+
+        .hover-label {
+          bottom: 5px;
+          padding: 5px;
+        }
+
+        .download-btn {
+          font-size: 16px;
+          padding: 10px;
+          border-radius: 5px;
+        }
+
+        nav #ul2 {
+          display: none;
+        }
+
+        #eye {
+          height: 100vh;
+          background-color: white;
+        }
+
+        #eye_1 {
+          top: 5vh;
+          left: 4vw;
+          width: 50vw;
+        }
+
+        #EyeAnatomy {
+          width: 50vw;
+        }
+
+        #eye_2 {
+          gap: 1vh;
+          top: 25vh;
+          right: 4vw;
+          width: 90vw;
+          padding: 20px;
+        }
+
+        #eye_2 h2 {
+          font-size: 14px;
+        }
+
+        #eye_2 p {
+          font-size: 12px;
+          line-height: 1.2;
+        }
+
+        #eye_3 {
+          gap: 1vh;
+          bottom: 8vh;
+          right: 4vw;
+          width: 90vw;
+          padding: 20px;
+          border-radius: 10px;
+          text-align: left;
+        }
+
+        #eye_3 h2 {
+          font-size: 14px;
+        }
+
+        #eye_3 p {
+          font-size: 12px;
+          line-height: 1.2;
+        }
+
+        #oct {
+          height: 200vh;
+        }
+
+        h1 {
+          font-size: 1rem;
+          margin-bottom: 5vh;
+        }
+
+        .timeline {
+          width: 80%;
+        }
+
+        .timeline-item {
+          padding: 3vh;
+          margin: 3vh 0;
+          transform: translateY(50px); /* Start with an offset */
+        }
+
+        .timeline-item h2 {
+          font-size: 1.1rem;
+          margin-bottom: 2vh;
+        }
+
+        .timeline-item p {
+          font-size: 1rem;
+        }
+
+        .hidden {
+          transform: translateY(15vh); /* Start off-screen */
+        }
+
+        #model {
+          height: 160vh;
+        }
+
+        #model_1 {
+          width: 70vw;
+        }
+
+        /* Image styling */
+        #Resnet {
+          position: absolute;
+          top: 4vh;
+          width: 70vw;
+        }
+
+        #model_info p {
+          font-size: 1.35rem;
+          line-height: 1.2;
+          width: 80vw;
+        }
+
+        #overlayButton {
+          bottom: 15vh;
+          right: 10vw;
+          height: 4vh;
+          width: 4vh; /* Make width and height equal for a circle */
+        }
+
+        /* Centered grid of images */
+        .overlay-content {
+          grid-template-columns: 1fr;
+          border-radius: 10px;
+        }
+
+        .overlay-content img {
+          width: 80vw;
+          height: 20vh;
+          border-radius: 5px;
+        }
+
+        #copywrite {
+          font-size: 1.2rem;
+          height: 10vh;
+        }
+
+        #contactmeimg.visible {
+          bottom: 33px;
+        }
+      }
+
+      @media only screen and (min-width: 600px) and (max-width: 800px) {
+        #login-container {
+          height: 50vh;
+          width: 50vw;
+          gap: 7vh;
+          border-radius: 8px;
+          font-size: 18px;
+        }
+
+        #login-container input {
+          margin: 10px 0;
+          padding: 10px;
+          width: 30vw;
+          border-radius: 4px;
+          font-size: 18px;
+        }
+
+        #login-container button {
+          padding: 10px 20px;
+          font-size: 18px;
+        }
+
+        #info-alert h2 {
+          font-size: 3.5vw;
+          top: 8vh;
+        }
+
+        #info-alert p {
+          border-radius: 10px;
+          padding: 1vw;
+          margin-left: 10vw;
+          margin-right: 10vw;
+          font-size: 2.3vw;
+          top: 25vh;
+        }
+
+        #imgcontainer {
+          font-size: 2.1vw;
+          bottom: 25vh;
+          gap: 5vw;
+        }
+
+        .imgcontain {
+          height: 15vh;
+          width: 15vh;
+        }
+
+        .pics {
+          height: 15vh;
+          width: 15vh;
+        }
+
+        #detect {
+          gap: 10vh;
+          height: 86vh;
+          background-color: #faf6f6;
+        }
+
+        form {
+          gap: 16px;
+        }
+
+        input[type="file"] {
+          font-size: 20px;
+          padding: 18px;
+          border: 2px dashed #ccc;
+          border-radius: 5px;
+        }
+
+        button {
+          font-size: 20px;
+          padding: 18px;
+          border-radius: 5px;
+        }
+
+        .scrollable {
+          width: 78vw;
+          padding: 15px;
+          gap: 15px;
+          border-radius: 10px;
+        }
+
+        .image-container {
+          gap: 20px;
+          width: 200px;
+          height: 200px;
+        }
+
+        .image-container img {
+          width: 150px;
+          height: 150px;
+          border-radius: 10px;
+        }
+
+        .hover-label {
+          bottom: 5px;
+          padding: 5px;
+        }
+
+        .download-btn {
+          font-size: 20px;
+          padding: 20px;
+          border-radius: 5px;
+        }
+
+        #eye {
+          height: 100vh;
+          background-color: white;
+        }
+
+        #eye_1 {
+          top: 10vh;
+          left: 5vw;
+          width: 35vw;
+        }
+
+        #EyeAnatomy {
+          width: 35vw;
+        }
+
+        #eye_2 {
+          gap: 1vh;
+          top: 10vh;
+          right: 4vw;
+          width: 45vw;
+          padding: 20px;
+        }
+
+        #eye_2 h2 {
+          font-size: 17px;
+        }
+
+        #eye_2 p {
+          font-size: 15px;
+          line-height: 1.3;
+        }
+
+        #eye_3 {
+          gap: 1vh;
+          bottom: 8vh;
+          right: 4vw;
+          width: 90vw;
+          padding: 20px;
+          border-radius: 10px;
+          text-align: left;
+        }
+
+        #eye_3 h2 {
+          font-size: 17px;
+        }
+
+        #eye_3 p {
+          font-size: 15px;
+          line-height: 1.3;
+        }
+
+        #oct {
+          height: 200vh;
+        }
+
+        h1 {
+          font-size: 2rem;
+          margin-bottom: 8vh;
+        }
+
+        .timeline {
+          width: 80%;
+        }
+
+        .timeline-item {
+          padding: 3vh;
+          margin: 3vh 0;
+          transform: translateY(50px); /* Start with an offset */
+        }
+
+        .timeline-item h2 {
+          font-size: 1.3rem;
+          margin-bottom: 2vh;
+        }
+
+        .timeline-item p {
+          font-size: 1.1rem;
+        }
+
+        .hidden {
+          transform: translateY(15vh); /* Start off-screen */
+        }
+
+        #model {
+          height: 160vh;
+        }
+
+        #model_1 {
+          width: 70vw;
+        }
+
+        /* Image styling */
+        #Resnet {
+          position: absolute;
+          top: 4vh;
+          width: 70vw;
+        }
+
+        #model_info p {
+          font-size: 1.7rem;
+          line-height: 1.5;
+          width: 80vw;
+        }
+
+        #overlayButton {
+          bottom: 15vh;
+          right: 10vw;
+          height: 4vh;
+          width: 4vh; /* Make width and height equal for a circle */
+        }
+
+        /* Centered grid of images */
+        .overlay-content {
+          grid-template-columns: 1fr 1fr;
+          border-radius: 10px;
+        }
+
+        .overlay-content img {
+          width: 33vw;
+          height: 33vh;
+          border-radius: 5px;
+        }
+
+        #copywrite {
+          font-size: 1.7rem;
+          height: 10vh;
+        }
+      }
+
+      @media only screen and (min-width: 800px) and (max-width: 1000px) {
+        #login-container {
+          height: 50vh;
+          width: 50vw;
+          gap: 7vh;
+          border-radius: 8px;
+          font-size: 20px;
+        }
+
+        #login-container input {
+          margin: 10px 0;
+          padding: 10px;
+          width: 30vw;
+          border-radius: 4px;
+          font-size: 20px;
+        }
+
+        #login-container button {
+          padding: 10px 20px;
+          font-size: 20px;
+        }
+
+        #info-alert h2 {
+          font-size: 3.5vw;
+          top: 8vh;
+        }
+
+        #info-alert p {
+          border-radius: 10px;
+          padding: 1vw;
+          margin-left: 10vw;
+          margin-right: 10vw;
+          font-size: 2.3vw;
+          top: 25vh;
+        }
+
+        #imgcontainer {
+          font-size: 2.1vw;
+          bottom: 25vh;
+          gap: 5vw;
+        }
+
+        .imgcontain {
+          height: 15vh;
+          width: 15vh;
+        }
+
+        .pics {
+          height: 15vh;
+          width: 15vh;
+        }
+
+        #detect {
+          gap: 10vh;
+          height: 86vh;
+          background-color: #faf6f6;
+        }
+
+        form {
+          gap: 16px;
+        }
+
+        input[type="file"] {
+          font-size: 20px;
+          padding: 18px;
+          border: 2px dashed #ccc;
+          border-radius: 5px;
+        }
+
+        button {
+          font-size: 20px;
+          padding: 18px;
+          border-radius: 5px;
+        }
+
+        .scrollable {
+          width: 78vw;
+          padding: 15px;
+          gap: 15px;
+          border-radius: 10px;
+        }
+
+        .image-container {
+          gap: 20px;
+          width: 200px;
+          height: 200px;
+        }
+
+        .image-container img {
+          width: 150px;
+          height: 150px;
+          border-radius: 10px;
+        }
+
+        .hover-label {
+          bottom: 5px;
+          padding: 5px;
+        }
+
+        .download-btn {
+          font-size: 20px;
+          padding: 20px;
+          border-radius: 5px;
+        }
+
+        #eye {
+          height: 100vh;
+          background-color: white;
+        }
+
+        #eye_1 {
+          top: 10vh;
+          left: 5vw;
+          width: 40vw;
+        }
+
+        #EyeAnatomy {
+          width: 40vw;
+        }
+
+        #eye_2 {
+          gap: 1vh;
+          top: 10vh;
+          right: 4vw;
+          width: 45vw;
+          padding: 20px;
+        }
+
+        #eye_2 h2 {
+          font-size: 20px;
+        }
+
+        #eye_2 p {
+          font-size: 18px;
+          line-height: 1.6;
+        }
+
+        #eye_3 {
+          gap: 1vh;
+          bottom: 8vh;
+          right: 4vw;
+          width: 90vw;
+          padding: 20px;
+          border-radius: 10px;
+          text-align: left;
+        }
+
+        #eye_3 h2 {
+          font-size: 20px;
+        }
+
+        #eye_3 p {
+          font-size: 18px;
+          line-height: 1.6;
+        }
+
+        #oct {
+          height: 200vh;
+        }
+
+        h1 {
+          font-size: 2.5rem;
+          margin-bottom: 10vh;
+        }
+
+        .timeline {
+          width: 80%;
+        }
+
+        .timeline-item {
+          padding: 5vh;
+          margin: 3vh 0;
+          transform: translateY(50px); /* Start with an offset */
+        }
+
+        .timeline-item h2 {
+          font-size: 1.5rem;
+          margin-bottom: 2vh;
+        }
+
+        .timeline-item p {
+          font-size: 1.3rem;
+        }
+
+        .hidden {
+          transform: translateY(15vh); /* Start off-screen */
+        }
+
+        #model {
+          height: 160vh;
+        }
+
+        #model_1 {
+          width: 70vw;
+        }
+
+        /* Image styling */
+        #Resnet {
+          width: 60vw;
+          height: 40vh;
+        }
+
+        #model_info p {
+          font-size: 2.2rem;
+          line-height: 1.6;
+          width: 80vw;
+        }
+
+        #overlayButton {
+          bottom: 15vh;
+          right: 10vw;
+          height: 4vh;
+          width: 4vh; /* Make width and height equal for a circle */
+        }
+
+        /* Centered grid of images */
+        .overlay-content {
+          grid-template-columns: 1fr 1fr;
+          border-radius: 10px;
+        }
+
+        .overlay-content img {
+          width: 33vw;
+          height: 33vh;
+          border-radius: 5px;
+        }
+
+        #copywrite {
+          font-size: 2rem;
+          height: 10vh;
+        }
+      }
+
+      @media only screen and (min-width: 1000px) and (max-width: 1200px) {
+        #login {
+          font-size: larger;
+        }
+
+        #login input {
+          font-size: larger;
+        }
+
+        #eye_2 h2 {
+          font-size: medium;
+        }
+
+        #eye_2 p {
+          font-size: small;
+        }
+
+        #eye_3 h2 {
+          font-size: medium;
+        }
+
+        #eye_3 p {
+          font-size: small;
+        }
+      }
+
+      @media only screen and (min-width: 1300px) and (max-width: 1500px) {
+        #eye_2 h2 {
+          font-size: x-large;
+        }
+
+        #eye_2 p {
+          font-size: large;
+        }
+
+        #eye_3 h2 {
+          font-size: x-large;
+        }
+
+        #eye_3 p {
+          font-size: large;
+        }
+
+        #model_info p {
+          font-size: 2.1rem;
+        }
+      }
+
+      @media only screen and (min-width: 1500px) and (max-width: 1800px) {
+        #login {
+          font-size: larger;
+        }
+
+        #login input {
+          font-size: larger;
+        }
+
+        nav a {
+          font-size: x-large;
+        }
+
+        #detect {
+          gap: 50px;
+          height: 86vh;
+        }
+
+        form {
+          gap: 20px;
+        }
+
+        input[type="file"] {
+          font-size: x-large;
+          padding: 15px;
+          border: 3px dashed #ccc;
+          border-radius: 10px;
+        }
+
+        button {
+          font-size: x-large;
+          padding: 20px;
+          border-radius: 5px;
+        }
+
+        .scrollable {
+          width: 1200px;
+          padding: 20px;
+          gap: 20px;
+          border-radius: 20px;
+        }
+
+        .image-container {
+          gap: 20px;
+          width: 220px;
+          height: 220px;
+        }
+
+        .image-container img {
+          width: 180px;
+          height: 180px;
+          border-radius: 20px;
+        }
+
+        .hover-label {
+          bottom: 10px;
+          padding: 10px;
+          border-radius: 10px;
+        }
+
+        .download-btn {
+          font-size: x-large;
+          padding: 20px;
+          border-radius: 10px;
+        }
+
+        #eye_2 h2 {
+          font-size: x-large;
+        }
+
+        #eye_2 p {
+          font-size: large;
+        }
+
+        #eye_3 {
+          width: 70vw;
+        }
+
+        #eye_3 h2 {
+          font-size: x-large;
+        }
+
+        #eye_3 p {
+          font-size: large;
+        }
+
+        h1 {
+          font-size: 3rem;
+        }
+
+        .timeline-item h2 {
+          font-size: 1.6rem;
+        }
+
+        .timeline-item p {
+          font-size: 1.1rem;
+        }
+
+        #model_info p {
+          font-size: 2.2rem;
+        }
+
+        #copywrite p {
+          font-size: x-large;
+        }
+      }
+
+      @media only screen and (min-width: 1800px) {
+        #login {
+          font-size: x-large;
+        }
+
+        #login input {
+          font-size: larger;
+        }
+
+        nav a {
+          font-size: x-large;
+        }
+
+        #detect {
+          gap: 80px;
+          height: 86vh;
+        }
+
+        form {
+          gap: 20px;
+        }
+
+        input[type="file"] {
+          font-size: x-large;
+          padding: 20px;
+          border: 3px dashed #ccc;
+          border-radius: 10px;
+        }
+
+        button {
+          font-size: x-large;
+          padding: 30px;
+          border-radius: 5px;
+        }
+
+        .scrollable {
+          width: 1330px;
+          padding: 20px;
+          gap: 20px;
+          border-radius: 25px;
+        }
+
+        .image-container {
+          gap: 20px;
+          width: 250px;
+          height: 250px;
+        }
+
+        .image-container img {
+          width: 200px;
+          height: 200px;
+          border-radius: 20px;
+        }
+
+        .hover-label {
+          bottom: 10px;
+          padding: 10px;
+          border-radius: 10px;
+        }
+
+        .download-btn {
+          font-size: x-large;
+          padding: 25px;
+          border-radius: 10px;
+        }
+
+        #eye_2 h2 {
+          font-size: xx-large;
+        }
+
+        #eye_2 p {
+          font-size: x-large;
+        }
+
+        #eye_3 h2 {
+          font-size: xx-large;
+        }
+
+        #eye_3 p {
+          font-size: x-large;
+        }
+
+        h1 {
+          font-size: 3.5rem;
+        }
+
+        .timeline-item h2 {
+          font-size: 2.2rem;
+        }
+
+        .timeline-item p {
+          font-size: 1.5rem;
+        }
+
+        #model_info p {
+          font-size: 2.8rem;
+        }
+
+        #copywrite p {
+          font-size: x-large;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="contactmebtn">
+      <img src="../static/contactme.png" id="contactmeimg" />
+    </div>
+    <div id="overlay2"></div>
+    <div id="S7">
+      <form id="form" action="https://api.web3forms.com/submit" method="POST">
+        <h3 id="contactme">Query</h3>
+        <input
+          type="hidden"
+          name="access_key"
+          value="4b490f5d-d424-4b8a-8474-f18ac12f4b52"
+        />
+        <input
+          type="text"
+          name="name"
+          placeholder="Your Name"
+          required
+          class="wao"
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Your E-mail"
+          required
+          class="wao"
+        />
+        <textarea
+          name="message"
+          placeholder="Your Message"
+          required
+          class="wao"
+        ></textarea>
+        <button type="submit" id="goo">Submit</button>
+      </form>
+    </div>
+    <section id="login">
+      <div id="login-container">
+        <h2>AUTHENTICATE</h2>
+        <form id="login-form">
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Username"
+            required
+          />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="password"
+            required
+          />
+          <button type="submit">Login</button>
+        </form>
+        <p class="error" id="error-message"></p>
+      </div>
+    </section>
+    <div id="info-alert">
+      <h2>OcularSense</h2>
+      <p>
+        Our platform offers a streamlined solution for early detection and
+        management of retinal diseases like DME, CNV, and Drusen. Traditionally,
+        diagnosing these conditions requires manual OCT image evaluation by
+        experts, delaying critical care. Using advanced CNN models with ResNet,
+        our site allows users to upload OCT scans and quickly receive
+        probability-based analyses. The system classifies images into Normal,
+        DME, CNV, or Drusen, ensuring accurate and timely insights for effective
+        management and treatment.
+        <br />
+        <br />
+        <strong style="color: #2e7d32"
+          >Initial server response may take a moment; please wait
+          briefly.</strong
+        >
+      </p>
+      <div id="imgcontainer">
+        <div class="imgcontain">
+          <label class="label" style="color: #4caf50">Developer</label>
+          <img src="../static/Abhinav.png" class="pics" />
+          <label class="label">Abhinav</label>
+        </div>
+        <div class="imgcontain">
+          <label class="label" style="color: #4caf50">Researcher</label>
+          <img src="../static/Aditya.jpg" class="pics" />
+          <label class="label">Aditya</label>
+        </div>
+        <div class="imgcontain">
+          <label class="label" style="color: #4caf50">Presenter</label>
+          <img src="../static/Rohan.jpg" class="pics" />
+          <label class="label">Rohan</label>
+        </div>
+      </div>
+    </div>
+    <nav>
+      <ul id="ul1">
+        <li><a href="" id="logo">OcularSense</a></li>
+      </ul>
+      <ul id="ul2">
+        <li><a href="">Identify</a></li>
+        <li><a href="#eye">Vision</a></li>
+        <li><a href="#oct">Imaging</a></li>
+        <li><a href="#model">Analysis</a></li>
+      </ul>
+    </nav>
+    <section id="detect">
+      <form action="/" method="post" enctype="multipart/form-data">
+        <input type="file" name="images" multiple />
+        <button type="submit" onclick="toggleText()">Upload and Predict</button>
+      </form>
+
+      {% if error %}
+      <p style="color: red; text-align: center">{{ error }}</p>
+      {% endif %} {% if results %}
+      <div class="scrollable">
+        {% for result in results %}
+        <div class="image-container">
+          <p>{{ result.filename }}</p>
+          <img
+            src="{{ url_for('uploaded_file', filename=result.filename) }}"
+            alt="Uploaded Image"
+          />
+          <div class="hover-label">{{ result.predicted_label }}</div>
+        </div>
+        {% endfor %}
+      </div>
+      <a href="{{ url_for('download_file') }}" class="download-btn"
+        >Download Predictions</a
+      >
+      {% endif %}
+    </section>
+    <section id="eye">
+      <div id="eye_1">
+        <img
+          src="./static/EyeAnatomy.png"
+          alt=""
+          id="EyeAnatomy"
+          class="fade-in"
+        />
+      </div>
+      <div id="eye_2">
+        <h2>The Human Eye</h2>
+        <p>
+          The human eye is a complex organ responsible for vision, enabling us
+          to perceive the world around us. It functions by capturing light and
+          converting it into electrical signals that are sent to the brain. The
+          eye consists of several key structures, including the cornea, lens,
+          iris, and retina, each playing a vital role in the process of vision.
+          Proper functioning of these components is essential for clear sight
+          and overall eye health.
+        </p>
+      </div>
+      <div id="eye_3">
+        <h2>The Retina</h2>
+        <p>
+          The retina is a thin layer of tissue located at the back of the eye,
+          playing a crucial role in vision. It contains specialized
+          photoreceptor cells known as rods and cones that convert light into
+          neural signals. These signals are then transmitted to the brain via
+          the optic nerve, where they are processed to enable the perception of
+          shapes, colors, and movements. The retina is essential for clear
+          vision and overall eye health. In the context of Optical Coherence
+          Tomography (OCT) classification, analyzing the retinal structure is
+          vital for diagnosing various ocular diseases, such as age-related
+          macular degeneration (AMD) and diabetic retinopathy. OCT imaging
+          provides detailed cross-sectional views of the retina, allowing for
+          the assessment of its thickness and the detection of abnormalities,
+          which aids in timely intervention and treatment.
+        </p>
+      </div>
+    </section>
+    <section id="oct">
+      <h1>Timeline of Retinal Imaging Technology</h1>
+      <div class="timeline">
+        <div class="timeline-item hidden">
+          <h2>1960s: Fundus Photography</h2>
+          <p>
+            Captures 2D images of the retina. Provided an early means to
+            visually assess retinal health, but lacked depth information.
+          </p>
+        </div>
+        <div class="timeline-item hidden">
+          <h2>1970s: Fluorescein Angiography (FA)</h2>
+          <p>
+            Uses fluorescent dye to image retinal blood vessels. Good for
+            detecting blood vessel abnormalities but doesn't provide detailed
+            retinal structure.
+          </p>
+        </div>
+        <div class="timeline-item hidden">
+          <h2>1980s: Indocyanine Green Angiography (ICGA)</h2>
+          <p>
+            Improved on FA by visualizing deeper layers, especially the choroid,
+            but still lacked 3D data or cross-sectional detail.
+          </p>
+        </div>
+        <div class="timeline-item hidden">
+          <h2>1990s: Ultrasound Imaging (B-scan)</h2>
+          <p>
+            Allowed 2D cross-sectional imaging of the eye, but with lower
+            resolution compared to later methods.
+          </p>
+        </div>
+        <div class="timeline-item hidden">
+          <h2>2000s: Optical Coherence Tomography (OCT)</h2>
+          <p>
+            Introduced high-resolution, non-invasive cross-sectional imaging of
+            retinal layers, providing unparalleled detail of retinal structures.
+          </p>
+        </div>
+        <div class="timeline-item hidden">
+          <h2>Why OCT is Superior</h2>
+          <p>
+            OCT offers detailed, 3D imaging of retinal layers, allowing for
+            earlier and more precise diagnosis of conditions like macular
+            degeneration and glaucoma. It is non-invasive and provides real-time
+            imaging, unlike older techniques which rely on dyes or
+            lower-resolution scans.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section id="model">
+      <div id="model_1">
+        <img src="./static/Resnet.png" alt="" id="Resnet" />
+      </div>
+      <div id="model_info">
+        <p>
+          <strong>Why ResNet is Effective:</strong><br />
+          Residual Network is a highly effective deep learning architecture
+          designed to address the vanishing gradient problem in deep neural
+          networks. Its key innovation is the introduction of residual
+          connections, which allow gradients to flow directly through skip
+          connections, enabling the training of very deep networks. These
+          connections help in learning identity mappings, ensuring that deeper
+          layers do not degrade performance. ResNet's modular structure,
+          composed of residual blocks, makes it scalable and adaptable for
+          various tasks. It achieves high accuracy in image classification,
+          object detection, and other vision tasks while maintaining
+          computational efficiency. By focusing on learning residuals, ResNet
+          significantly improves convergence, generalization, and robustness,
+          making it a popular choice for complex deep learning problems.
+          <span style="color: #2e7d32; font-weight: 600"
+            >Click the button for more info!</span
+          ><br /><br />
+
+          <strong>Model Performance:</strong><br />
+          Training Accuracy: <strong>0.97</strong><br />
+          Testing Accuracy: <strong>0.96</strong>
+        </p>
+      </div>
+      <button id="overlayButton"></button>
+    </section>
+    <div id="overlay">
+      <div class="overlay-content">
+        <img src="../static/Figure_1.png" alt="Image 1" />
+        <img src="../static/Figure_2.png" alt="Image 2" />
+        <img src="../static/Figure_3.png" alt="Image 3" />
+        <img src="../static/Figure_4.png" alt="Image 4" />
+      </div>
+    </div>
+    <section id="copywrite">
+      <p>&copy; 2024. All rights reserved.</p>
+    </section>
+    <script>
+      // Handle form submission
+      const form = document.getElementById("login-form");
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        const response = await fetch("/authenticate", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `username=${username}&password=${password}`,
+        });
+
+        const result = await response.json();
+        const errorMessage = document.getElementById("error-message");
+
+        if (response.ok) {
+          document.getElementById("login").style.display = "none";
+          document.getElementsByTagName("nav")[0].style.display = "flex";
+          document.getElementById("detect").style.display = "flex";
+          document.getElementById("eye").style.display = "flex";
+          document.getElementById("oct").style.display = "flex";
+          document.getElementById("model").style.display = "flex";
+          document.getElementById("copywrite").style.display = "flex";
+        } else {
+          errorMessage.style.color = "red";
+          errorMessage.textContent = result.message;
+        }
+      });
+
+      // contactme
+      setTimeout(function () {
+        var img = document.getElementById("contactmeimg");
+        img.classList.add("visible");
+        setTimeout(function () {
+          img.classList.add("hover-effect");
+        }, 0); // Delay before starting hover effect
+      }, 1000); // Delay of 1000ms before popping up
+
+      var overlay7 = document.getElementById("overlay2");
+      var formContainer = document.getElementById("S7");
+
+      document
+        .getElementById("contactmeimg")
+        .addEventListener("click", function () {
+          var isVisible = formContainer.style.display === "block";
+
+          if (isVisible) {
+            formContainer.style.opacity = "0";
+            setTimeout(function () {
+              formContainer.style.display = "none";
+              overlay7.style.display = "none";
+            }, 500); // Match this with the transition duration
+          } else {
+            formContainer.style.display = "block";
+            overlay7.style.display = "block";
+            setTimeout(function () {
+              formContainer.style.opacity = "1";
+            }, 10); // Slight delay to ensure the display change takes effect
+          }
+        });
+
+      document
+        .getElementById("overlay2")
+        .addEventListener("click", function () {
+          var overlay7 = document.getElementById("overlay2");
+          formContainer.style.opacity = "0";
+          setTimeout(function () {
+            formContainer.style.display = "none";
+            overlay7.style.display = "none";
+          }, 500); // Match this with the transition duration
+        });
+
+      const infoalert = document.getElementById("info-alert");
+      setTimeout(() => {
+        infoalert.style.display = "flex";
+        setTimeout(() => {
+          infoalert.style.display = "none";
+        }, 2000);
+      }, 3000);
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const eyeAnatomy = document.getElementById("EyeAnatomy");
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              eyeAnatomy.classList.add("visible"); // Add visible class when in view
+              observer.unobserve(entry.target); // Stop observing after it's visible
+              const eyeDiv1 = document.getElementById("eye_2");
+              const eyeDiv2 = document.getElementById("eye_3");
+              const rect1 = eyeDiv1.getBoundingClientRect();
+              const rect2 = eyeDiv2.getBoundingClientRect();
+              eyeDiv1.classList.add("visible");
+              eyeDiv2.classList.add("visible");
+            }
+          });
+        });
+
+        observer.observe(eyeAnatomy); // Observe the eye anatomy image
+      });
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible"); // Add visible class when in view
+            observer.unobserve(entry.target); // Stop observing once it's visible
+          }
+        });
+      });
+
+      // Target all timeline items
+      document.querySelectorAll(".timeline-item").forEach((item) => {
+        observer.observe(item); // Observe each item
+      });
+
+      const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible"); // Add 'visible' class when in view
+            imageObserver.unobserve(entry.target); // Stop observing once visible
+          }
+        });
+      });
+
+      // Target the image by its ID
+      const image = document.getElementById("Resnet");
+      if (image) {
+        imageObserver.observe(image); // Observe the image
+      }
+
+      // JavaScript to handle overlay visibility
+      const overlayButton = document.getElementById("overlayButton");
+      const overlay = document.getElementById("overlay");
+
+      // Show overlay on button click
+      overlayButton.addEventListener("click", () => {
+        overlay.style.display = "flex";
+      });
+
+      // Hide overlay on background click
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) {
+          overlay.style.display = "none";
+        }
+      });
+    </script>
+  </body>
+</html>
