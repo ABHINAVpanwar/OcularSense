@@ -6,6 +6,9 @@ from PIL import Image
 import os
 from datetime import datetime
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(current_dir, 'best_resnet_model.pth')
+
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploaded_data'
 RESULTS_FILE = 'classification_report.txt'
@@ -21,7 +24,7 @@ num_features = model.fc.in_features
 model.fc = nn.Linear(num_features, 4)
 
 # Step 2: Load the trained weights
-model.load_state_dict(torch.load('best_resnet_model.pth'))
+model.load_state_dict(torch.load(model_path))
 model.eval()
 
 # Step 3: Preprocess the image
@@ -119,9 +122,6 @@ def download_file():
 @app.route('/uploaded_images/<filename>')
 def uploaded_file(filename):
     return send_file(os.path.join(UPLOAD_FOLDER, filename))
-
-# if __name__ == '__main__':
-#     app.run(debug=True)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
