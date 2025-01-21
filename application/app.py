@@ -16,6 +16,8 @@ UPLOAD_FOLDER = os.path.join(app.root_path, 'uploaded_data')
 RESULTS_FILE = os.path.join(app.root_path, 'classification_report.txt')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Ensure upload folder exists
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER  # Add this line to fix the KeyError
+
 # Step 1: Define the model architecture
 model = models.resnet18(pretrained=False)
 num_features = model.fc.in_features
