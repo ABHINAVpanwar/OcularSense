@@ -8,6 +8,9 @@ from PIL import Image
 
 app = Flask(__name__)
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(current_dir, 'best_resnet_model.pth')
+
 # Directory for storing uploaded images and results
 UPLOAD_FOLDER = os.path.join(app.root_path, 'uploaded_data')
 RESULTS_FILE = os.path.join(app.root_path, 'classification_report.txt')
