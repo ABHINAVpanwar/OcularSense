@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, request, render_template, send_file, redirect, url_for
-from flask_cors import CORS
 import os
 from datetime import datetime
 import torch
@@ -8,7 +7,6 @@ from torchvision import models, transforms
 from PIL import Image
 
 app = Flask(__name__)
-CORS(app)
 
 # Directory for storing uploaded images and results
 UPLOAD_FOLDER = os.path.join(app.root_path, 'uploaded_data')
