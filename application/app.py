@@ -1,34 +1,29 @@
-from flask import Flask, jsonify, request, render_template, send_file
+from flask import Flask, jsonify, request, render_template, send_file, redirect, url_for
+from flask_cors import CORS
+import os
+from datetime import datetime
 import torch
 import torch.nn as nn
 from torchvision import models, transforms
 from PIL import Image
-import os
-from datetime import datetime
 
-# Initialize the app
 app = Flask(__name__)
+CORS(app)
 
-# Directories
-UPLOAD_FOLDER = '/tmp/uploaded_data'  # Use /tmp for Render compatibility
-RESULTS_FILE = '/tmp/classification_report.txt'
+# Directory for storing uploaded images and results
+UPLOAD_FOLDER = os.path.join(app.root_path, 'uploaded_data')
+RESULTS_FILE = os.path.join(app.root_path, 'classification_report.txt')
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Ensure upload folder exists
 
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-# Ensure upload and results directories exist
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
-# Model setup
-current_dir = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(current_dir, 'best_resnet_model.pth')
-
+# Initialize model
+model_path = os.path.join(app.root_path, 'best_resnet_model.pth')
 model = models.resnet18(pretrained=False)
 num_features = model.fc.in_features
 model.fc = nn.Linear(num_features, 4)
 model.load_state_dict(torch.load(model_path))
 model.eval()
 
-# Image preprocessing
+# Preprocessing for images
 def preprocess_image(img_path):
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
@@ -38,7 +33,7 @@ def preprocess_image(img_path):
     image = Image.open(img_path).convert('RGB')
     return transform(image).unsqueeze(0)
 
-# Prediction logic
+# Prediction function
 def predict_image_class(img_path):
     img_tensor = preprocess_image(img_path)
     with torch.no_grad():
@@ -47,6 +42,7 @@ def predict_image_class(img_path):
     confidence = torch.softmax(predictions, dim=1)[0, predicted_class].item() * 100
     return predicted_class, confidence
 
+# Map class index to labels
 def map_class_to_label(predicted_class):
     class_labels = ['CNV', 'DME', 'DRUSEN', 'NORMAL']
     return class_labels[predicted_class]
@@ -56,15 +52,18 @@ def index():
     results = []
 
     if request.method == 'POST':
-        # Clear upload folder and results file
+        # Clear previous uploaded files
         for file in os.listdir(UPLOAD_FOLDER):
-            os.remove(os.path.join(UPLOAD_FOLDER, file))
+            file_path = os.path.join(UPLOAD_FOLDER, file)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
 
+        # Clear or initialize results file
         with open(RESULTS_FILE, 'w') as f:
-            f.write("=============================" + "\n")
+            f.write("=============================\n")
             f.write("OCT Image Classification Results\n")
             f.write(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-            f.write("=============================" + "\n")
+            f.write("=============================\n")
             f.write("\nFilename                     | Predicted Label | Confidence\n")
             f.write("------------------------------------------------------------\n")
 
@@ -77,20 +76,22 @@ def index():
             if file.filename == '':
                 continue
 
-            # Save file
+            # Save the file in the upload folder
             file_path = os.path.join(UPLOAD_FOLDER, file.filename)
             file.save(file_path)
 
-            # Predict
+            # Predict the class
             predicted_class, confidence = predict_image_class(file_path)
             predicted_label = map_class_to_label(predicted_class)
 
+            # Append result
             results.append({
                 'filename': file.filename,
                 'predicted_label': predicted_label,
                 'confidence': f"{confidence:.2f}%"
             })
 
+            # Log result in the results file
             with open(RESULTS_FILE, 'a') as f:
                 f.write(f"{file.filename:<30} | {predicted_label:<15} | {confidence:.2f}%\n")
 
@@ -107,11 +108,7 @@ def download_file():
 
 @app.route('/uploaded_images/<filename>')
 def uploaded_file(filename):
-    file_path = os.path.join(UPLOAD_FOLDER, filename)
-    if os.path.exists(file_path):
-        return send_file(file_path)
-    else:
-        return jsonify({"error": "File not found"}), 404
+    return send_file(os.path.join(UPLOAD_FOLDER, filename))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
