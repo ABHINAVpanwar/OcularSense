@@ -45,7 +45,7 @@ model = model.to(device)
 
 # Define loss and optimizer
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
 # Training loop with metrics tracking
 def train_model():
@@ -56,7 +56,6 @@ def train_model():
     for epoch in range(epochs):
         print(f"Epoch {epoch + 1}/{epochs}")
         print("-" * 30)
-
         # Training phase
         model.train()
         train_loss = 0.0

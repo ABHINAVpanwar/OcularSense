@@ -9,7 +9,7 @@ import numpy as np
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Validation dataset path
-val_path = "C:/Users/Abhinav/OneDrive/Documents/MAJOR PROJECT/Dataset/VAL"
+val_path = "C:/Users/Abhinav/OneDrive/Documents/MAJOR PROJECT/Dataset/TEST"
 
 # Transformation for validation data
 transform = transforms.Compose([
