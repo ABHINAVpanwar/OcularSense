@@ -9,7 +9,7 @@ from PIL import Image
 app = Flask(__name__)
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(current_dir, 'best_resnet_model.pth')
+model_path = os.path.join(current_dir, 'best_densenet_model.pth')
 
 # Directory for storing uploaded images and results
 UPLOAD_FOLDER = os.path.join(app.root_path, 'uploaded_data')
@@ -19,9 +19,9 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Ensure upload folder exists
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER  # Add this line to fix the KeyError
 
 # Step 1: Define the model architecture
-model = models.resnet18(pretrained=False)
-num_features = model.fc.in_features
-model.fc = nn.Linear(num_features, 4)
+model = models.densenet121(pretrained=False)
+num_features = model.classifier.in_features
+model.classifier = nn.Linear(num_features, 4)
 
 # Step 2: Load the trained weights
 model.load_state_dict(torch.load(model_path))
@@ -110,7 +110,7 @@ def authenticate():
     username = request.form.get('username')
     password = request.form.get('password')
 
-    if username == "Abhinav" and password == "08042003":
+    if username == "admin" and password == "password":
         return jsonify({"message": "Login Successful"})
     else:
         return jsonify({"message": "Invalid Credentials"}), 401
