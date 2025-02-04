@@ -672,16 +672,17 @@
       }
 
       /* Image styling */
-      #Resnet {
+      #Densenet {
         height: auto;
         width: 50vw;
+        height: 50vh;
         object-fit: contain;
         opacity: 0; /* Start invisible */
         transform: scale(0.9); /* Start slightly smaller */
         transition: opacity 1s ease-in-out, transform 1s ease-in-out; /* Smooth transition */
       }
 
-      #Resnet.visible {
+      #Densenet.visible {
         opacity: 1; /* Fade in */
         transform: scale(1); /* Scale to full size */
       }
@@ -969,7 +970,7 @@
         }
 
         /* Image styling */
-        #Resnet {
+        #Densenet {
           position: absolute;
           top: 4vh;
           width: 70vw;
@@ -1203,7 +1204,7 @@
         }
 
         /* Image styling */
-        #Resnet {
+        #Densenet {
           position: absolute;
           top: 4vh;
           width: 70vw;
@@ -1437,7 +1438,7 @@
         }
 
         /* Image styling */
-        #Resnet {
+        #Densenet {
           width: 60vw;
           height: 40vh;
         }
