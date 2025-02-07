@@ -723,6 +723,97 @@
         }
       }
 
+      #ModelComparison {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 150vh;
+        background-color: white;
+        cursor: default;
+        position: relative;
+      }
+
+      #ModelComparison h1 {
+        text-align: center;
+        font-size: 30px;
+        color: #333;
+        position: absolute;
+        top: 10vh;
+      }
+
+      #IC {
+        position: absolute;
+        top: 30vh;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      #IC1 {
+        width: 45%;
+        height: auto;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .ic1anime {
+        opacity: 0; /* Start as invisible */
+        transform: translateX(-100vw); /* Start off-screen to the left */
+        transition: opacity 1.5s ease-in-out, transform 1s ease-in-out; /* Smooth transition */
+      }
+
+      .ic1anime.visible2 {
+        opacity: 1; /* Make it visible */
+        transform: translateX(0); /* Move to original position */
+      }
+
+      #IC2 {
+        width: 45%;
+        height: auto;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .ic2anime {
+        opacity: 0; /* Start as invisible */
+        transform: translateX(100vw); /* Start off-screen to the right */
+        transition: opacity 1.5s ease-in-out, transform 1s ease-in-out; /* Smooth transition */
+      }
+
+      .ic2anime.visible2 {
+        opacity: 1; /* Make it visible */
+        transform: translateX(0); /* Move to original position */
+      }
+
+      #PC {
+        position: absolute;
+        bottom: 15vh;
+        font-size: 1.8rem;
+        line-height: 1.6;
+        color: black;
+        list-style-type: none;
+        padding-left: 0;
+      }
+
+      #PC li {
+        text-align: left;
+        padding-left: 0;
+        font-family: "Reenie Beanie", serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      #PC li:before {
+        content: "•";
+        color: #4caf50;
+        font-weight: bold;
+        display: inline-block;
+      }
+
       #overlay {
         display: none; /* Hidden by default */
         position: fixed;
@@ -982,6 +1073,45 @@
           width: 80vw;
         }
 
+        #ModelComparison {
+          height: 130vh;
+        }
+
+        #ModelComparison h1 {
+          font-size: 22px;
+          top: 5vh;
+        }
+
+        #IC {
+          top: 15vh;
+          gap: 5vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+
+        #IC1 {
+          width: 80%;
+          height: auto;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #IC2 {
+          width: 80%;
+          height: auto;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #PC {
+          bottom: 15vh;
+          width: 80vw;
+          font-size: 18px;
+          line-height: 1.6;
+        }
+
         #overlayButton {
           bottom: 15vh;
           right: 10vw;
@@ -1214,6 +1344,41 @@
           font-size: 1.7rem;
           line-height: 1.5;
           width: 80vw;
+        }
+
+        #ModelComparison {
+          height: 90vh;
+        }
+
+        #ModelComparison h1 {
+          font-size: 35px;
+          top: 5vh;
+        }
+
+        #IC {
+          top: 20vh;
+          gap: 20px;
+        }
+
+        #IC1 {
+          width: 45%;
+          height: auto;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #IC2 {
+          width: 45%;
+          height: auto;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #PC {
+          bottom: 10vh;
+          width: 80vw;
+          font-size: 25px;
+          line-height: 1.6;
         }
 
         #overlayButton {
@@ -1449,6 +1614,41 @@
           width: 80vw;
         }
 
+        #ModelComparison {
+          height: 80vh;
+        }
+
+        #ModelComparison h1 {
+          font-size: 40px;
+          top: 5vh;
+        }
+
+        #IC {
+          top: 20vh;
+          gap: 20px;
+        }
+
+        #IC1 {
+          width: 45%;
+          height: auto;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #IC2 {
+          width: 45%;
+          height: auto;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #PC {
+          bottom: 10vh;
+          width: 80vw;
+          font-size: 25px;
+          line-height: 1.6;
+        }
+
         #overlayButton {
           bottom: 15vh;
           right: 10vw;
@@ -1498,6 +1698,40 @@
         #eye_3 p {
           font-size: small;
         }
+
+        #ModelComparison {
+          height: 120vh;
+        }
+
+        #ModelComparison h1 {
+          font-size: 30px;
+          top: 10vh;
+        }
+
+        #IC {
+          top: 30vh;
+          gap: 20px;
+        }
+
+        #IC1 {
+          width: 45%;
+          height: auto;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #IC2 {
+          width: 45%;
+          height: auto;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #PC {
+          bottom: 10vh;
+          font-size: 25px;
+          line-height: 1.6;
+        }
       }
 
       @media only screen and (min-width: 1300px) and (max-width: 1500px) {
@@ -1519,6 +1753,40 @@
 
         #model_info p {
           font-size: 2.1rem;
+        }
+
+        #ModelComparison {
+          height: 150vh;
+        }
+
+        #ModelComparison h1 {
+          font-size: 36px;
+          top: 10vh;
+        }
+
+        #IC {
+          top: 30vh;
+          gap: 20px;
+        }
+
+        #IC1 {
+          width: 45%;
+          height: auto;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #IC2 {
+          width: 45%;
+          height: auto;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #PC {
+          bottom: 20vh;
+          font-size: 30px;
+          line-height: 1.6;
         }
       }
 
@@ -1624,6 +1892,40 @@
           font-size: 2.2rem;
         }
 
+        #ModelComparison {
+          height: 150vh;
+        }
+
+        #ModelComparison h1 {
+          font-size: 40px;
+          top: 10vh;
+        }
+
+        #IC {
+          top: 30vh;
+          gap: 20px;
+        }
+
+        #IC1 {
+          width: 45%;
+          height: auto;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #IC2 {
+          width: 45%;
+          height: auto;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #PC {
+          bottom: 20vh;
+          font-size: 36px;
+          line-height: 1.6;
+        }
+
         #copywrite p {
           font-size: x-large;
         }
@@ -1725,6 +2027,40 @@
 
         #model_info p {
           font-size: 2.8rem;
+        }
+
+        #ModelComparison {
+          height: 150vh;
+        }
+
+        #ModelComparison h1 {
+          font-size: 50px;
+          top: 10vh;
+        }
+
+        #IC {
+          top: 30vh;
+          gap: 20px;
+        }
+
+        #IC1 {
+          width: 45%;
+          height: auto;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #IC2 {
+          width: 45%;
+          height: auto;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #PC {
+          bottom: 20vh;
+          font-size: 40px;
+          line-height: 1.6;
         }
 
         #copywrite p {
@@ -1980,10 +2316,35 @@
 
           <strong>Model Performance:</strong><br />
           Training Accuracy: <strong>0.99</strong><br />
-          Testing Accuracy: <strong>0.96</strong>
+          Testing Accuracy: <strong>0.98</strong>
         </p>
       </div>
       <button id="overlayButton"></button>
+    </section>
+    <section id="ModelComparison">
+      <h1>Comparison with Other Models</h1>
+      <div id="IC">
+        <img id="IC1" class="ic1anime" src="../static/Model Comparison 1.png" />
+        <img id="IC2" class="ic2anime" src="../static/Model Comparison 2.png" />
+      </div>
+      <ul id="PC">
+        <li>
+          <strong>DenseNet:</strong> Delivers the best training performance but
+          suffers from slight overfitting.
+        </li>
+        <li>
+          <strong>ResNet:</strong> Achieves high training accuracy but overfits,
+          with a significant gap between training and testing losses.
+        </li>
+        <li>
+          <strong>GoogleNet:</strong> Less accurate than ResNet but maintains a
+          better balance between training and testing losses.
+        </li>
+        <li>
+          <strong>CNN:</strong> Lowest testing accuracy but maintains balanced
+          training and testing losses.
+        </li>
+      </ul>
     </section>
     <div id="overlay">
       <div class="overlay-content">
@@ -2021,6 +2382,7 @@
           document.getElementById("eye").style.display = "flex";
           document.getElementById("oct").style.display = "flex";
           document.getElementById("model").style.display = "flex";
+          document.getElementById("ModelComparison").style.display = "flex";
           document.getElementById("copywrite").style.display = "flex";
         } else {
           errorMessage.style.color = "red";
@@ -2076,23 +2438,26 @@
         infoalert.style.display = "flex";
         setTimeout(() => {
           infoalert.style.display = "none";
-        }, 10000);
+        }, 0);
       }, 3000);
 
       document.addEventListener("DOMContentLoaded", function () {
         const eyeAnatomy = document.getElementById("EyeAnatomy");
-
+        const eyeDiv1 = document.getElementById("eye_2");
+        const eyeDiv2 = document.getElementById("eye_3");
+        const IC1 = document.getElementById("IC1");
+        const IC2 = document.getElementById("IC2");
         const observer = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               eyeAnatomy.classList.add("visible"); // Add visible class when in view
               observer.unobserve(entry.target); // Stop observing after it's visible
-              const eyeDiv1 = document.getElementById("eye_2");
-              const eyeDiv2 = document.getElementById("eye_3");
               const rect1 = eyeDiv1.getBoundingClientRect();
               const rect2 = eyeDiv2.getBoundingClientRect();
               eyeDiv1.classList.add("visible");
               eyeDiv2.classList.add("visible");
+              IC1.classList.add("visible2");
+              IC2.classList.add("visible2");
             }
           });
         });
