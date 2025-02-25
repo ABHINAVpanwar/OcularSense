@@ -45,13 +45,16 @@ def predict_image_class(img_path):
     predicted_class = torch.argmax(predictions, dim=1).item()
     confidence = torch.softmax(predictions, dim=1)[0, predicted_class].item() * 100
     if confidence < 70:
-        return "OCT_UNKNOWN", confidence
+        return -1, confidence
     return predicted_class, confidence
 
 # Step 5: Map predicted class to label
 def map_class_to_label(predicted_class):
     class_labels = ['CNV', 'DME', 'DRUSEN', 'NORMAL']
-    return class_labels[predicted_class]
+    if predicted_class not in range(len(class_labels)):  # Handle invalid index
+        return "OCT_UNKNOWN"
+    else:
+        return class_labels[predicted_class]
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
