@@ -44,7 +44,7 @@ def predict_image_class(img_path):
         predictions = model(img_tensor)
     predicted_class = torch.argmax(predictions, dim=1).item()
     confidence = torch.softmax(predictions, dim=1)[0, predicted_class].item() * 100
-    if confidence < 70:
+    if confidence < 90:
         return -1, confidence
     return predicted_class, confidence
 
